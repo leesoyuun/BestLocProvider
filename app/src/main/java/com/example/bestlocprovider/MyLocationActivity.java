@@ -38,9 +38,9 @@ public class MyLocationActivity extends AppCompatActivity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                    myLocField.setText("Latitude: "+ location.getLatitude()
-                    + "\nLongitude: " + location.getLongitude()
-                    + "\nAltitude: " + location.getAltitude());
+                myLocField.setText("Latitude: " + location.getLatitude()
+                        + "\nLongitude: " + location.getLongitude()
+                        + "\nAltitude: " + location.getAltitude());
             }
         };
 
@@ -53,7 +53,7 @@ public class MyLocationActivity extends AppCompatActivity {
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             Toast.makeText(MyLocationActivity.this,
-                    "First enable Location ACCESS in settings." , Toast.LENGTH_LONG).show();
+                    "First enable Location ACCESS in settings.", Toast.LENGTH_LONG).show();
             return;
         }
         locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
@@ -68,7 +68,20 @@ public class MyLocationActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onResume() {
+        super.onResume();
+        super.onResume();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+
+        }
+        locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     }
 }
